@@ -3,5 +3,4 @@ language:node_js
 before_script:
   - npm i -g --silent @angular-cli
 script:
-  - npm test
   - ng build --prod
