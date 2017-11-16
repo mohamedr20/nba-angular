@@ -1,0 +1,25 @@
+.primary-footer{
+    background-color:lighten(#C9E4CA,11%);
+    box-shadow:8px 5px 4px rgba(0, 0, 8, 0.05);
+    width:100%;
+    position: fixed;
+    bottom:0;
+    display:block;
+}
+.nav-links{
+    display:flex;
+    justify-content: flex-end;
+    li{
+        a{
+            color:#364958;
+            font-size:.9em;
+        }
+    }
+}
+.primary-footer>ul>li{
+    margin-left:5px;
+    list-style:none;
+}
+.primary-footer>ul>li>a{
+    text-decoration: none;
+}

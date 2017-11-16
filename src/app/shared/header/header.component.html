@@ -1,0 +1,22 @@
+
+		<header class="main-header container">
+			<div class="row">
+				<div class="col-sm-3 col-md-3 col-lg-3">
+						<i class="fa logo fa-2x  fa-dribbble" aria-hidden="true"></i>
+				</div>
+				<div class="col-sm-9 col-md-9 col-lg-9">
+						<nav [ngClass]="{'is-open':hamburgerToggle}" class="main-nav">
+								<ul class="unstyled-list">
+									<li><a href="">Home</a></li>
+									<li><a href="">About</a></li>
+									<li><a href="">Blog</a></li>
+									<li><a href="">Pricing</a></li>
+									<li><a href="">Contact</a></li>
+								</ul>
+							</nav>
+							<div (click)="hamburgerToggle=!hamburgerToggle" class="nav-toggle">
+								<div [ngClass]="{'is-open':hamburgerToggle}"class="hamburger"></div>
+							</div>
+					</div>
+				</div>
+		</header>
