@@ -1,5 +1,5 @@
 
-		<header class="main-header container">
+		<!-- <header class="main-header container">
 			<div class="row">
 				<div class="col-sm-3 col-md-3 col-lg-3">
 						<i class="fa logo fa-2x  fa-dribbble" aria-hidden="true"></i>
@@ -19,4 +19,38 @@
 							</div>
 					</div>
 				</div>
-		</header>
+		</header> -->
+		<mat-toolbar color="primary">
+				<div  (click)="sidenav.open()"  class="nav-toggle">
+						<div  [ngClass]="{'is-open':hamburgerToggle}"class="hamburger"></div>
+				</div>
+				<h3 class="menu-heading">Menu</h3>
+		</mat-toolbar>		
+		<mat-sidenav-container  class="sidenav-container">
+
+				
+				<mat-sidenav class="sidenav" #sidenav>
+					<mat-list>
+						<h3 matSubHeader>Folders</h3>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+						<h3 matSubHeader>Folders</h3>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+						<mat-list-item><a href="">Pepper</a></mat-list-item>
+						<mat-divider></mat-divider>
+					</mat-list>
+				</mat-sidenav>
+		</mat-sidenav-container>
+
+		

@@ -1,7 +1,10 @@
-sudo:required
-language:node_js
-before_script:
-  -npm i -g --silent @angular-cli
-script:
-  -npm test
-  -ng build --prod
+language: node_js
+
+node_js:
+   - node # will use latest node
+
+before_script: # commands to run before the build step
+   - npm install -g --silent @angular/cli
+
+script: # the build step
+   - ng build --prod
