@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {AuthModule} from '../auth/auth.module';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,11 +8,10 @@ import {AuthModule} from '../auth/auth.module';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(public auth:AuthModule) { }
+  constructor(public auth:AuthService) { }
 
   ngOnInit() {
   }
 
-  console.log(auth.googleLogin())
 
 }
