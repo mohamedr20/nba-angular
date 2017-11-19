@@ -1,11 +1,6 @@
 import { Component,ViewEncapsulation } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import {Observable} from 'rxjs';
-
-interface Book{
-  title:string;
-  content:string;
-}
+import {NbaService} from './nba-service/nba.service';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +9,14 @@ interface Book{
   encapsulation:ViewEncapsulation.None
 })
 export class AppComponent {
-  constructor(private afs:AngularFirestore){}
+  constructor(private afs:AngularFirestore,public nba:NbaService){}
 
-  bookCol : AngularFirestoreCollection<Book>
-  books:Observable<Book[]>
 
   ngOnInit(){
-    this.bookCol = this.afs.collection('books');
-    this.books = this.bookCol.valueChanges();
-    console.log(this.books);
+
   }
-
-
-
-  title = 'app';
+  
+  getData(){
+    this.nba.getConferenceTeamStandings();
+  }
 }

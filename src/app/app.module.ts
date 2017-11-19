@@ -4,7 +4,14 @@ import { NgModule } from '@angular/core';
 import {HttpModule} from '@angular/http';
 import { AngularFireModule} from 'angularfire2';
 import {AuthModule} from './auth/auth.module';
+import {NbaModule} from './nba-service/nba.module';
+
+import {AuthGuard} from './auth/auth.guard';
 import {MaterialModule} from './material/material.module';
+import {Routes,RouterModule} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -12,20 +19,15 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { CardComponent } from './shared/card/card.component';
 
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserFormComponent } from './user-profile/user-form/user-form.component';
 
-export const firebaseConfig = {
-  apiKey: "AIzaSyCuCNSm_ukd-2nULW26XxFaFBBO6Y9nHo0",
-  authDomain: "nba-angular.firebaseapp.com",
-  databaseURL: "https://nba-angular.firebaseio.com",
-  projectId: "nba-angular",
-  storageBucket: "nba-angular.appspot.com",
-  messagingSenderId: "953516423796"
-}
+import {NbaTableComponent} from './nba/nba-table/nba-table.component';
+import {firebaseConfig} from '../../firebase.config';
 
-// const routes: Routes = [
-//   ///...
-//   { path: 'notes', component: NotesListComponent,  canActivate: [AuthGuard] },
-// ];
+const appRoutes: Routes = [
+  { path: '', component: UserProfileComponent},
+  {path:'nba-standings',component:NbaTableComponent}
+];
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ export const firebaseConfig = {
     FooterComponent,
     CardComponent,
     UserProfileComponent,
-
+    UserFormComponent,
+    NbaTableComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,11 @@ export const firebaseConfig = {
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AuthModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NbaModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

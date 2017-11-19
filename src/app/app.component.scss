@@ -1,2 +1,9 @@
 
-@import '../scss/main';
+// @import '../scss/main';
+.container{
+    height:700px;
+}
+.flex-center{
+    justify-content: center !important;
+    align-items:center !important;
+}

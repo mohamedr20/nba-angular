@@ -1,56 +1,40 @@
 
-		<!-- <header class="main-header container">
-			<div class="row">
-				<div class="col-sm-3 col-md-3 col-lg-3">
-						<i class="fa logo fa-2x  fa-dribbble" aria-hidden="true"></i>
-				</div>
-				<div class="col-sm-9 col-md-9 col-lg-9">
-						<nav [ngClass]="{'is-open':hamburgerToggle}" class="main-nav">
-								<ul class="unstyled-list">
-									<li><a href="">Home</a></li>
-									<li><a href="">About</a></li>
-									<li><a href="">Blog</a></li>
-									<li><a href="">Pricing</a></li>
-									<li><a href="">Contact</a></li>
-								</ul>
-							</nav>
-							<div (click)="hamburgerToggle=!hamburgerToggle" class="nav-toggle">
-								<div [ngClass]="{'is-open':hamburgerToggle}"class="hamburger"></div>
-							</div>
+
+				<mat-toolbar class="mat-toolbar mat-elevation-z6" color="primary">
+					<i (click)="sidenav.open()"class="material-icons md-48">menu</i>
+					<li>Menu</li>
+				</mat-toolbar>
+
+				<mat-sidenav-container class="example-container">
+					<mat-sidenav #sidenav class="example-sidenav">
+						<nav>
+							<h3>Standings</h3>
+							<ul>
+								<li><a routerLink="/nba-standings"href="#">Overall Team Standings</a></li>
+								<li>Division Team Standings</li>
+								<li>Playoff Team Standings</li>
+							</ul>
+						</nav>
+						<nav>
+							<h3>Players</h3>
+							<ul>
+								<li>Roster Players</li>
+								<li>Starting Game Lineup</li>
+								<li>Active Players</li>
+							</ul>
+						</nav>
+						<nav>
+							<h3>Stats</h3>
+							<ul>
+								<li>Cumulative Player Stats</li>
+								<li>Daily Player Stats</li>
+							</ul>
+						</nav>
+					</mat-sidenav>
+					<div class="example-sidenav-content">
+						<router-outlet></router-outlet>
 					</div>
-				</div>
-		</header> -->
-		<mat-toolbar color="primary">
-				<div  (click)="sidenav.open()"  class="nav-toggle">
-						<div  [ngClass]="{'is-open':hamburgerToggle}"class="hamburger"></div>
-				</div>
-				<h3 class="menu-heading">Menu</h3>
-		</mat-toolbar>		
-		<!-- <mat-sidenav-container  class="sidenav-container">
-				<mat-sidenav class="sidenav" #sidenav>
-					<mat-list>
-						<h3 matSubHeader>Folders</h3>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-						<h3 matSubHeader>Folders</h3>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-						<mat-list-item><a href="">Pepper</a></mat-list-item>
-						<mat-divider></mat-divider>
-					</mat-list>
-				</mat-sidenav>
-		</mat-sidenav-container> -->
+				</mat-sidenav-container>
 
 
 
-		
