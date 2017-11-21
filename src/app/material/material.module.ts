@@ -8,12 +8,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
 @NgModule({
   imports: [
-    CommonModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
+    CommonModule,MatTabsModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule
   ],
-  exports:[MatToolbarModule,MatMenuModule,MatSidenavModule,
+  exports:[MatToolbarModule,MatTabsModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule],
   declarations: []
 })

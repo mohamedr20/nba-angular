@@ -69,6 +69,7 @@ export class AuthService {
   emailLogin(credentials:EmailPasswordCredentials){
     return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,credentials.password)
     .then((user)=>{
+      this.router.navigate(['/nba'])
       return this.updateUserData(user)
     })
     .catch(err=>console.log(err))

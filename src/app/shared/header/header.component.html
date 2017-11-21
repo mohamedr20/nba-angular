@@ -8,26 +8,26 @@
 				<mat-sidenav-container class="example-container">
 					<mat-sidenav #sidenav class="example-sidenav">
 						<nav>
-							<h3>Standings</h3>
+							<h3><a routerLink="/standings"href="#">Standings</a></h3>
 							<ul>
-								<li><a routerLink="/nba-standings"href="#">Overall Team Standings</a></li>
-								<li>Division Team Standings</li>
-								<li>Playoff Team Standings</li>
+								<li><a routerLink="/standings/overall" href="#">Overall Team Standings</a></li>
+								<li><a routerLink="/standings/division"href="#">Division Team Standings</a></li>
+								<li><a routerLink="/standings/playoffs"href="#">Playoff Team Standings</a></li>
 							</ul>
 						</nav>
 						<nav>
-							<h3>Players</h3>
+							<h3><a routerLink="/players"href="#">Players</a></h3>
 							<ul>
-								<li>Roster Players</li>
-								<li>Starting Game Lineup</li>
-								<li>Active Players</li>
+								<li><a href="#" routerLink="">Roster Players</a></li>
+								<li><a href="#" routerLink="">Starting Game Lineup</a></li>
+								<li><a href="#" routerLink="">Active Players</a></li>
 							</ul>
 						</nav>
 						<nav>
-							<h3>Stats</h3>
+							<h3><a routerLink="/stats" href="#">Stats</a></h3>
 							<ul>
-								<li>Cumulative Player Stats</li>
-								<li>Daily Player Stats</li>
+								<li><a routerLink="stats/cumulative-players" href="#">Cumulative Player Stats</a></li>
+								<li><a routerLink="stats/daily-player" href="#">Daily Player Stats</a></li>
 							</ul>
 						</nav>
 					</mat-sidenav>
