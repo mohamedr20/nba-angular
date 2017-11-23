@@ -9,12 +9,13 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatSortModule} from '@angular/material/sort';
 @NgModule({
   imports: [
-    CommonModule,MatTabsModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
+    CommonModule,MatSortModule,MatTabsModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule
   ],
-  exports:[MatToolbarModule,MatTabsModule,MatMenuModule,MatSidenavModule,
+  exports:[MatToolbarModule,MatSortModule,MatTabsModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule],
   declarations: []
 })

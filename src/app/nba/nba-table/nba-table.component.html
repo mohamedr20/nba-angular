@@ -1,39 +1,33 @@
 <div class="example-container mat-elevation-z8">
-    <div class="example-header">
-      <mat-form-field floatPlaceholder="never">
-        <input matInput #filter placeholder="Filter users">
-      </mat-form-field>
-    </div>
+    <mat-table #table [dataSource]="dataSource">
   
-    <mat-table #table>
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
-      <!-- ID Column -->
+      <!-- Position Column -->
       <ng-container matColumnDef="Rank">
-        <mat-header-cell *matHeaderCellDef> Rank </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.rank}} </mat-cell>
-      </ng-container>
-  
-      <!-- Progress Column -->
-      <ng-container matColumnDef="teamName">
-        <mat-header-cell *matHeaderCellDef> Progress </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.teamName}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+        <mat-cell *matCellDef="let data"> {{data.rank}} </mat-cell>
       </ng-container>
   
       <!-- Name Column -->
-      <ng-container matColumnDef={{columns}}>
-        <mat-header-cell *matHeaderCellDef>Wins</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      <ng-container matColumnDef="Team Name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let data"> {{data.teamName}} </mat-cell>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Games">
+        <mat-header-cell *matHeaderCellDef> Games </mat-header-cell>
+        <mat-cell *matCellDef="let data"> {{data.gamesPlayed}} </mat-cell>
       </ng-container>
   
       <!-- Color Column -->
-      <ng-container matColumnDef="color">
-        <mat-header-cell *matHeaderCellDef> Color </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell>
+      <ng-container matColumnDef="Wins">
+        <mat-header-cell *matHeaderCellDef> Wins </mat-header-cell>
+        <mat-cell *matCellDef="let data"> {{data.wins}} </mat-cell>
       </ng-container>
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    
   </div>
