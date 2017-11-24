@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {MatSort} from '@angular/material';
+import {MatPaginator} from '@angular/material';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
@@ -21,9 +22,9 @@ export class DivisionComponent {
   dataSource: ExampleDataSource | null;
 
   @ViewChild(MatSort) sort: MatSort;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
+    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort,this.paginator);
   }
 }
 
@@ -87,7 +88,7 @@ export class ExampleDatabase {
  * should be rendered.
  */
 export class ExampleDataSource extends DataSource<any> {
-  constructor(private _exampleDatabase: ExampleDatabase, private _sort: MatSort) {
+  constructor(private _exampleDatabase: ExampleDatabase, private _sort: MatSort,private _paginator:MatPaginator) {
     super();
   }
 
@@ -96,10 +97,14 @@ export class ExampleDataSource extends DataSource<any> {
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
       this._sort.sortChange,
+      this._paginator.page
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      return this.getSortedData();
+      const data = this._exampleDatabase.data.slice();
+      const startIndex = this._paginator.pageIndex*this._paginator.pageSize;
+      return data.splice(startIndex,this._paginator.pageSize)
+      // return this.getSortedData();
     });
   }
 

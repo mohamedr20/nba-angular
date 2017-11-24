@@ -1,6 +1,11 @@
 <div class="example-container mat-elevation-z8">
+    <div class="example-header">
+        <mat-form-field floatPlaceholder="never">
+          <input matInput #filter placeholder="Filter users">
+        </mat-form-field>
+      </div>
     <mat-table #table [dataSource]="dataSource" matSort>
-  
+      
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
             <!-- <ng-container matColumnDef="userId">
@@ -41,7 +46,7 @@
               <mat-cell *matCellDef="let row"> {{row.ppg}} </mat-cell>
             </ng-container> -->
           <!-- ID Column -->
-          
+
     <ng-container matColumnDef="userId">
       <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
@@ -79,4 +84,6 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+
+
   </div>
