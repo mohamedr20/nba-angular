@@ -16,7 +16,5 @@ export class AppComponent {
 
   }
   
-  getData(){
-    this.nba.getConferenceTeamStandings();
-  }
+
 }

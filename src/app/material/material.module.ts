@@ -10,12 +10,13 @@ import {MatInputModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material';
 @NgModule({
   imports: [
-    CommonModule,MatSortModule,MatTabsModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
+    CommonModule,MatPaginatorModule,MatSortModule,MatTabsModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule
   ],
-  exports:[MatToolbarModule,MatSortModule,MatTabsModule,MatMenuModule,MatSidenavModule,
+  exports:[MatToolbarModule,MatPaginatorModule,MatSortModule,MatTabsModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule],
   declarations: []
 })
