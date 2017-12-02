@@ -1,0 +1,19 @@
+.page-paragraph{
+    font-size:18px;
+    line-height:30px;
+    letter-spacing:.5px;
+    a{
+        text-decoration: none;
+        color:black;
+    }
+    a:hover{
+        color:#4152AF;
+    }
+}
+mat-card{
+    width:800px;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+}
+

@@ -2,8 +2,20 @@
 <router-outlet >
 </router-outlet>
 
-<div *ngIf="togglePage()">
-    <button>
-        BUtton
-    </button>
-</div>
+
+<mat-card *ngIf="togglePage()">
+    <mat-card-title>Welcome to Nba Angular!</mat-card-title>
+    <mat-card-content>
+    <p class="page-paragraph"> This is an application that showcases NBA stats in real-time
+        so you can be updated on your favorite players and teams.
+        There are two diffrent sets of data being pulled in from the Sportsfeed API.
+        If you want to access their data you can visit here:<a href="https://www.mysportsfeeds.com/data-feeds/">Sports Feed</a>
+    </p>
+    <p class="page-paragraph">Choose one of the three options below:</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button type="submit" class="landing-btn"color="primary">Players</button>
+        <button mat-raised-button class="landing-btn" color="primary">Standings</button>
+        <button mat-raised-button color="accent">Stats</button>
+    </mat-card-actions>
+</mat-card>

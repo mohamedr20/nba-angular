@@ -3,10 +3,24 @@
 				<mat-toolbar class="mat-toolbar mat-elevation-z6" color="primary">
 					<i (click)="sidenav.open()"class="material-icons md-48">menu</i>
 					<li>Menu</li>
+				<div *ngIf="auth.user | async; then authenticated">
+					
+				</div>
+				<ng-template #authenticated>
+						<i class="flex-end material-icons">exit_to_app</i>
+				</ng-template>
 				</mat-toolbar>
 
 				<mat-sidenav-container class="example-container">
 					<mat-sidenav #sidenav class="example-sidenav">
+							<nav>
+									<h3><a routerLink="nba/standings"href="#">Home</a></h3>
+									<ul>
+										<li><a routerLink="nba/standings/overall" href="#">Overall Team Standings</a></li>
+										<li><a routerLink="nba/standings/division"href="#">Division Team Standings</a></li>
+										<li><a routerLink="nba/standings/playoffs"href="#">Playoff Team Standings</a></li>
+									</ul>
+								</nav>
 						<nav>
 							<h3><a routerLink="nba/standings"href="#">Standings</a></h3>
 							<ul>
@@ -29,6 +43,9 @@
 								<li><a routerLink="stats/cumulative-players" href="#">Cumulative Player Stats</a></li>
 								<li><a routerLink="stats/daily-player" href="#">Daily Player Stats</a></li>
 							</ul>
+						</nav>
+						<nav>
+							<h3><a href="">Logout</a></h3>
 						</nav>
 					</mat-sidenav>
 					<div class="example-sidenav-content">

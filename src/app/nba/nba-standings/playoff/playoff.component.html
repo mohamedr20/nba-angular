@@ -1,82 +1,56 @@
 <div class="example-container mat-elevation-z8">
+    <div class="example-header">
+      <mat-input-container floatPlaceholder="never">
+        <input matInput #filter placeholder="Filter users">
+      </mat-input-container>
+    </div>
+  
     <mat-table #table [dataSource]="dataSource" matSort>
   
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-            <!-- <ng-container matColumnDef="userId">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-              </ng-container> -->
-      
-      <!-- <ng-container matColumnDef="Rank">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Rank </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.rank}} </mat-cell>
-      </ng-container>
-  
-      
-      <ng-container matColumnDef="Division">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Division </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.division}}</mat-cell>
-      </ng-container>
-  
-     
-      <ng-container matColumnDef="Name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-      </ng-container>
-  
-      
-      <ng-container matColumnDef="Wins">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Wins </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.wins}} </mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="Losses">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Losses </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.losses}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="PPG">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> PPG </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.ppg}} </mat-cell>
-            </ng-container> -->
-          <!-- ID Column -->
-          
-    <ng-container matColumnDef="userId">
+      <ng-container matColumnDef="playerId">
       <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
     </ng-container>
 
     <!-- Progress Column -->
-    <ng-container matColumnDef="progress">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.firstName}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="userName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.lastName}} </mat-cell>
     </ng-container>
 
     <!-- Color Column -->
-    <ng-container matColumnDef="color">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell>
+    <ng-container matColumnDef="height">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Height </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.height}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="rank">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> rank</mat-header-cell>
-        <mat-cell *matCellDef="let row" > {{row.rank}} </mat-cell>
+    <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Position</mat-header-cell>
+        <mat-cell *matCellDef="let row" > {{row.position}} </mat-cell>
       </ng-container>
 
 
-    <ng-container matColumnDef="wins">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> wins</mat-header-cell>
-        <mat-cell *matCellDef="let row" > {{row.wins}} </mat-cell>
+    <ng-container matColumnDef="team">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Team</mat-header-cell>
+        <mat-cell *matCellDef="let row" > {{row.team}} </mat-cell>
       </ng-container>
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+
+  
+    <mat-paginator #paginator
+                  [length]="dataSource.length"
+                  [pageIndex]="0"
+                  [pageSize]="10"
+                  [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  
   </div>

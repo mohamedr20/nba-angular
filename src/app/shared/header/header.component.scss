@@ -162,6 +162,9 @@ box-shadow: 0 20px 5px 0 rgba(0,0,0,0.3);
   align-items: center;
   justify-content: center;
 }
+.flex-end{
+  float:right;
+}
 .example-sidenav{
   h3{
     border:none;
@@ -206,7 +209,6 @@ mat-toolbar li{
   height:100%;
   border:1px solid rgba(0,0,0,0.5);
 }
-
 
 
 

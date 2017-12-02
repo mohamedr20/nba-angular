@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../auth/auth.service";
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'user-form',
@@ -12,7 +13,7 @@ export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   newUser: boolean = true; // to toggle login or signup form
   passReset: boolean = false;
-  constructor(private fb: FormBuilder, private auth: AuthService) {}
+  constructor(private fb: FormBuilder, private router:Router,private auth: AuthService) {}
    ngOnInit(): void {
      this.buildForm();
    }
@@ -24,6 +25,17 @@ export class UserFormComponent implements OnInit {
    }
    login(): void {
      this.auth.emailLogin(this.userForm.value)
+        .then((user)=>{
+        this.router.navigate(['/nba'])
+        localStorage.setItem('Authentication','true')
+        return this.auth.updateUserData(user)
+    })
+    .catch((err)=>{
+      if(err.code = 'auth/user-not-found'){
+        let errMessage = err.message;
+        this.validationMessages.email.user = err.message
+      }
+    })
    }
 //    resetPassword() {
 //      this.auth.resetPassword(this.userForm.value['email'])
@@ -64,12 +76,14 @@ export class UserFormComponent implements OnInit {
    }
   formErrors = {
      'email': '',
-     'password': ''
+     'password': '',
+     'login':''
    };
    validationMessages = {
      'email': {
        'required':      'Email is required.',
-       'email':         'Email must be a valid email'
+       'email':         'Email must be a valid email',
+       'user': 'User not found, please register if you do not have an account.'
      },
      'password': {
        'required':      'Password is required.',

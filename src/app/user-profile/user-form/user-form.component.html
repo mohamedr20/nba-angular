@@ -1,19 +1,26 @@
-<form [formGroup]="userForm"  *ngIf="newUser"  (ngSubmit)="signup()">
-        <h3>New User Signup</h3>
-        <p (click)="toggleForm()">Already Registered?</p>
-        <hr>
-        <label for="email">Email</label>
-        <input type="email"
-               formControlName="email" required >
-        <div *ngIf="formErrors.email">
-          {{ formErrors.email }}
-        </div>
-        <label for="password">Password</label>
-        <input type="password"
-               formControlName="password" required >
-        <div *ngIf="formErrors.password">
-          {{ formErrors.password }}
-        </div>
-        <button type="submit"  [disabled]="!userForm.valid">Submit</button>
+
+
+<form [formGroup]="userForm"  *ngIf="newUser"  (ngSubmit)="login()">
+    <!-- <h3>New User Signup</h3>
+    <p (click)="toggleForm()">Already Registered?</p>
+    <hr> -->
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Email" type="email" formControlName="email" required>
+      <mat-error *ngIf="formErrors.email">
+        {{formErrors.email}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <input matInput placeholder="Password" type="password"
+        formControlName="password" required >
+        <mat-error *ngIf="formErrors.password">
+          {{ formErrors.password}}
+        </mat-error>
+    </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"  class="submit-btn" [disabled]="!userForm.valid">Submit</button>
         <span *ngIf="userForm.valid" >Form is valid</span>
-      </form>
+        <button mat-raised-button color="primary" type="submit"  class="submit-btn" [disabled]="!userForm.valid">Register</button>
+
+</form>

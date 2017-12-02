@@ -46,7 +46,7 @@ export class AuthService {
         this.updateUserData(credential.user)
       })
   }
-  private updateUserData(user) {
+  updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
@@ -61,22 +61,19 @@ export class AuthService {
   emailSignUp(credentials:EmailPasswordCredentials){
     return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email,credentials.password)
       .then((user)=>{
-        console.log(user)
+        this.router.navigate(['/nba'])
+        localStorage.setItem('Authentication','true')
         return this.updateUserData(user)
       })
     }
   
   emailLogin(credentials:EmailPasswordCredentials){
     return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,credentials.password)
-    .then((user)=>{
-      this.router.navigate(['/nba'])
-      return this.updateUserData(user)
-    })
-    .catch(err=>console.log(err))
   }
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
+        localStorage.setItem('Authentication','false')
         this.router.navigate(['/']);
     });
   }

@@ -1,16 +1,20 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import {NbaService} from '../../../nba-service/nba.service'
 @Component({
   selector: 'app-roster',
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.scss'],
-  encapsulation: ViewEncapsulation.None
 })
 export class RosterComponent implements OnInit {
+  
 
-  constructor() { }
 
+  constructor(private nba:NbaService) { }
+
+  
+  
   ngOnInit() {
+
   }
 
 }

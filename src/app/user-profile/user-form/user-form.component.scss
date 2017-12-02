@@ -1,0 +1,15 @@
+.form-error{
+    width:100%;
+    background-color:lighten(red,20%);
+    border-radius:2px;
+    animation:2s ease-in;
+}
+.form-error>h3{
+    color:red;
+}
+.form-field{
+    width:100%;
+}
+.submit-btn{
+    margin-top:20px;
+}

@@ -5,17 +5,16 @@ import {ActivatedRoute} from '@angular/router';
   selector: 'app-nba',
   templateUrl: './nba.component.html',
   styleUrls: ['./nba.component.scss'],
-  encapsulation: ViewEncapsulation.None
 })
 export class NbaComponent implements OnInit {
-  main_page:boolean= true;
+  public main_page:boolean= true;
 
   constructor(private route:ActivatedRoute) { 
-    console.log(route.firstChild)
+    
   }
 
   ngOnInit() {
-    
+    this.togglePage()
   }
 
   togglePage(){

@@ -7,9 +7,4 @@ before_script: # commands to run before the build step
    - npm install -g --silent @angular/cli
 
 script: # the build step
-<<<<<<< HEAD
    - ng build --prod
-=======
-   - ng build --prod
- 
->>>>>>> 8d7446c3dfab043a306d5d8d1b519ef9673192f6

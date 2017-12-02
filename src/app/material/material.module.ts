@@ -11,12 +11,15 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material';
+
 @NgModule({
   imports: [
-    CommonModule,MatPaginatorModule,MatSortModule,MatTabsModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
+    CommonModule,MatButtonModule,MatDialogModule,MatPaginatorModule,MatSortModule,MatTabsModule,MatToolbarModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule
   ],
-  exports:[MatToolbarModule,MatPaginatorModule,MatSortModule,MatTabsModule,MatMenuModule,MatSidenavModule,
+  exports:[MatButtonModule,MatToolbarModule,MatDialogModule,MatPaginatorModule,MatSortModule,MatTabsModule,MatMenuModule,MatSidenavModule,
     MatListModule,MatFormFieldModule,MatCardModule,MatInputModule,MatTableModule],
   declarations: []
 })

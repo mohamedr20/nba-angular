@@ -1,16 +1,23 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { Component, OnInit,EventEmitter, ViewEncapsulation } from '@angular/core';
+import {AuthService} from '../../auth/auth.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
-  }
+
+export class HeaderComponent{
+  
+  
+  constructor(public auth:AuthService) {
+
+   }
+
+  
+
+
+  
 
 }
