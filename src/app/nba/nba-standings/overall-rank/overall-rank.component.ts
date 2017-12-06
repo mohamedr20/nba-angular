@@ -1,9 +1,10 @@
 
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef,ChangeDetectorRef,OnInit, ViewChild} from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import {HttpClient,HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
@@ -13,7 +14,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/takeUntil';
 import {MatPaginator, MatSort} from '@angular/material';
-
+import {NbaService} from '../../../nba-service/nba.service';
 
 
 @Component({
@@ -21,20 +22,20 @@ import {MatPaginator, MatSort} from '@angular/material';
   templateUrl: './overall-rank.component.html',
   styleUrls: ['./overall-rank.component.scss'],
 })
-export class OverallRankComponent{
-  displayedColumns = ['playerId', 'firstName', 'lastName', 'height','position','team'];
-  exampleDatabase = new ExampleDatabase();
+export class OverallRankComponent implements OnInit{
+  displayedColumns = ['rank', 'GamesPlayed', 'Wins', 'Losses','Points','PointsAgainst','Name'];
+  exampleDatabase = new ExampleDatabase(this.nba);
   dataSource: ExampleDataSource | null;
 
   @ViewChild('filter') filter: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(private nba:NbaService,private cdr:ChangeDetectorRef) {
   }
 
-  ngOnInit() {
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+  ngOnInit(){
+    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
         .debounceTime(150)
         .distinctUntilChanged()
@@ -47,87 +48,88 @@ export class OverallRankComponent{
   }
 }
 
-const databased = {
-  rosterplayers:{
-    playerentry:
-      [
-        {player:{id:80653,firstName:'Alex',LastName:'Abrines',height:"6'6",position:'G'},
-        team:{Name:'Thunder'}},
-        {player:{id:80653,firstName:'Carlos',LastName:'Bobbinson',height:"6'3",position:'F'},
-        team:{Name:'Celtics'}},
-        {player:{id:80653,firstName:'Tom',LastName:'Penny',height:"6'1",position:'C'},
-        team:{Name:'Pistons'}},
-        {player:{id:80653,firstName:'Roberto',LastName:'Shaq',height:"6'10",position:'G'},
-        team:{Name:'Magic'}},
-        {player:{id:80653,firstName:'Alex',LastName:'Abrines',height:"6'6",position:'G'},
-        team:{Name:'Thunder'}},
-        {player:{id:80653,firstName:'Carlos',LastName:'Bobbinson',height:"6'3",position:'F'},
-        team:{Name:'Celtics'}},
-        {player:{id:80653,firstName:'Tom',LastName:'Penny',height:"6'1",position:'C'},
-        team:{Name:'Pistons'}},
-        {player:{id:80653,firstName:'Roberto',LastName:'Shaq',height:"6'10",position:'G'},
-        team:{Name:'Magic'}},
-        {player:{id:80653,firstName:'Alex',LastName:'Abrines',height:"6'6",position:'G'},
-        team:{Name:'Thunder'}},
-        {player:{id:80653,firstName:'Carlos',LastName:'Bobbinson',height:"6'3",position:'F'},
-        team:{Name:'Celtics'}},
-        {player:{id:80653,firstName:'Tom',LastName:'Penny',height:"6'1",position:'C'},
-        team:{Name:'Pistons'}},
-        {player:{id:80653,firstName:'Roberto',LastName:'Shaq',height:"6'10",position:'G'},
-        team:{Name:'Magic'}},
-      ]
-  }
-}
 
 /** Constants used to fill up our data base. */
 
 
 export interface NbaData{
-  id:string,
-  firstName:string,
-  lastName:string,
-  height:string,
-  position:string,
-  team:string
+  rank:string,
+  gamesPlayed:string,
+  wins:string,
+  losses:string,
+  pts:string,
+  ptsAgainst:string,
+  teamName:string
 }
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleDatabase {
   /** Stream that emits whenever the data has been modified. */
   dataChange: BehaviorSubject<NbaData[]> = new BehaviorSubject<NbaData[]>([]);
-
-  constructor() {
+  data_length:any;
+  dataApi:any;
+  constructor(private nba:NbaService) {
     // Fill up the database with 100 users.
-    for (let i = 0; i < databased.rosterplayers.playerentry.length; i++) {
-      this.addUser();
-    }
+
+      // this.addUser(i);
+      this.fetchTeamsData()
+
   }
 
-  get data(): NbaData[] {
+  get data(): any {
     return this.dataChange.value;
   }
 
   /** Adds a new user to the database. */
-  addUser() {
-    const copiedData = this.data.slice();
-    copiedData.push(this.createNewUser());
-    this.dataChange.next(copiedData);
-  }
+  //  addUser(i) {
+  //   const copiedData = this.data.slice();
+  //   copiedData.push(this.createNewUser(i));
+  //   this.dataChange.next(copiedData);
+  // }
 
+  fetchTeamsData(){
+    return this.nba.getOverallTeamStandings()
+               .subscribe( data => {
+                 console.log(data);
+                 let teamsData = data['overallteamstandings']['teamstandingsentry']
+                 
+                 const copiedData = this.data.slice();
+                 teamsData.foreach( team => {
+                   copiedData.push( this.createNewUser( team ) )
+                 } )
+                 // after teams are built, next it
+                 this.dataChange.next( copiedData )
+               } )
+  }
+  // createNewUser( team ){
+  //   return {
+  //     rank:team.rank,
+  //     gamesPlayed:team.stats.GamesPlayed["#text"],
+  //     wins:team.stats.Wins["#text"],
+  //     losses:team.stats.Losses["#text"],
+  //     pts:team.stats.Pts["#text"],
+  //     ptsAgainst:team.stats.PtsAgainst["#text"],
+  //     teamName:team.team.Name
+  //     } 
+  // }
   /** Builds and returns a new User. */
-  private createNewUser() {
-    var x  = this.data.length;
-    return {
-      id: (this.data.length + 1).toString(),
-      firstName: databased.rosterplayers.playerentry[x].player.firstName,
-      lastName: databased.rosterplayers.playerentry[x].player.LastName,
-      height:databased.rosterplayers.playerentry[x].player.height,
-      position:databased.rosterplayers.playerentry[x].player.position,
-      team:databased.rosterplayers.playerentry[x].team.Name
-    };
+  createNewUser(i){
+    this.nba.getOverallTeamStandings()
+    .subscribe((data)=>{
+      var obj = {
+        rank:data["overallteamstandings"]["teamstandingsentry"][i]["rank"],
+        gamesPlayed:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["GamesPlayed"]["#text"],
+        wins:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["Wins"]["#text"],
+        losses:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["Losses"]["#text"],
+        pts:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["Pts"]["#text"],
+        ptsAgainst:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["PtsAgainst"]["#text"],
+        teamName:data["overallteamstandings"]["teamstandingsentry"][i]["team"]["Name"]
+        }
+      return obj;
+    })
   }
-}
 
+}
 /**
  * Data source to provide what data should be rendered in the table. Note that the data source
  * can retrieve its data in any way. In this case, the data source is provided a reference
@@ -144,7 +146,7 @@ export class ExampleDataSource extends DataSource<NbaData> {
   /** emits the filter value */
   _filterChange = new BehaviorSubject<string>('');
 
-  constructor(private _exampleDatabase: ExampleDatabase, private _paginator: MatPaginator, private _sort: MatSort) {
+  constructor(private _exampleDatabase: ExampleDatabase,private _sort: MatSort) {
     super();
   }
 
@@ -161,15 +163,15 @@ export class ExampleDataSource extends DataSource<NbaData> {
     /** Holder for everything that affects displayed rows.  */
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
-      this._paginator.page,
+      // this._paginator.page,
       this._filterChange,
       this._sort.sortChange,
     ];
 
     /** Reset the Pagination to startpage if filtering is in progress.  */
-    this._filterChange
-        .takeUntil(this.disconnect$)
-        .subscribe(() => this.resetPaginator());
+    // this._filterChange
+    //     .takeUntil(this.disconnect$)
+    //     .subscribe(() => this.resetPaginator());
 
     /** Provides the actual data.  */
     return Observable
@@ -179,13 +181,13 @@ export class ExampleDataSource extends DataSource<NbaData> {
         .map((data) => this.getFilteredData(data))
         .map(data => this.getSortedData(data))
         .do(data => this.setLength(data))
-        .map(data => this.paginate(data));
+        // .map(data => this.paginate(data));
   }
 
 
-  resetPaginator() {
-    return this._paginator.pageIndex = 0;
-  }
+  // resetPaginator() {
+  //   return this._paginator.pageIndex = 0;
+  // }
 
   getFreshData() {
     return this._exampleDatabase.data.slice();
@@ -196,15 +198,15 @@ export class ExampleDataSource extends DataSource<NbaData> {
       return data;
     }
     return data.filter((item: NbaData) => {
-      const searchStr = (item.firstName + item.lastName).toLowerCase();
+      const searchStr = (item.rank).toLowerCase();
       return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
     });
   }
 
-  paginate(data) {
-    const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-    return data.splice(startIndex, this._paginator.pageSize);
-  }
+  // paginate(data) {
+  //   const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+  //   return data.splice(startIndex, this._paginator.pageSize);
+  // }
 
   setLength(data) {
     return this.length = data.length;
@@ -219,12 +221,7 @@ export class ExampleDataSource extends DataSource<NbaData> {
       let propertyB: number | string = '';
 
       switch (this._sort.active) {
-        case 'playerId': [propertyA, propertyB] = [a.id, b.id]; break;
-        case 'firstName': [propertyA, propertyB] = [a.firstName,b.firstName]; break;
-        case 'lastName': [propertyA, propertyB] = [a.lastName,b.lastName]; break;
-        case 'height': [propertyA, propertyB] = [a.height,b.height]; break;
-        case 'position':[propertyA,propertyB] = [a.position,b.position];break;
-        case 'team':[propertyA,propertyB] = [a.team,b.team];break;
+        case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
       }
 
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

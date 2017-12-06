@@ -24,23 +24,29 @@ import { ErrorComponent } from './error/error.component';
 import {DialogData} from './error/error.component';
 
 
-import {AppRoutingModule} from './app-routing.module';
+import {StandingsComponent} from './nba/nba-standings/nba-standings.component';
+import { OverallRankComponent } from './nba/nba-standings/overall-rank/overall-rank.component';
+import { DivisionComponent } from './nba/nba-standings/division/division.component';
+import { PlayoffComponent } from './nba/nba-standings/playoff/playoff.component';
 
-// export const appRoutes: Routes = [
-//   { path: '', component: UserProfileComponent},
-//   {path:'nba',component:NbaComponent,children:[
-//     {path:'standings',component:StandingsComponent,children:[
-//       {path:'division',component:DivisionComponent},
-//       {path:'overall-rank',component:OverallRankComponent},
-//       {path:'playoff',component:PlayoffComponent}
-//     ]},
-//       // {path:'standings',children:StandingRoutes,component:StandingsComponent},
-//       {path:'players',component:PlayersComponent},
-//       {path:'stats',component:StatsComponent}
-//     ]
-//   },
-// ]
-  
+
+
+export const appRoutes: Routes = [
+  { path: '', component: UserProfileComponent},
+  {path:'nba',component:NbaComponent,children:[
+    {path:'standings',component:StandingsComponent,children:[
+      {path:'division',component:DivisionComponent},
+      {path:'overall-rank',component:OverallRankComponent},
+      {path:'playoff',component:PlayoffComponent}
+    ]},
+      // {path:'standings',children:StandingRoutes,component:StandingsComponent},
+      // {path:'players',component:PlayersComponent},
+      // {path:'stats',component:StatsComponent}
+    ]
+  },
+]
+
+
   // {path:'../stats',component:NbaStatsComponent},
   // {path:'../players',component:NbaPlayersComponent},
   
@@ -70,7 +76,11 @@ import {AppRoutingModule} from './app-routing.module';
     StatsModule,
     StandingModule,
     NbaModule,
-    AppRoutingModule
+    RouterModule.forRoot(appRoutes)
+    // StandingRoutingModule,
+    // PlayerRoutingModule,
+    // StatRoutingModule,
+    // AppRoutingModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit,ViewChild} from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/takeUntil';
 import {MatPaginator, MatSort} from '@angular/material';
-
+import {NbaService} from '../../../nba-service/nba.service';
 
 @Component({
   selector: 'app-playoff',
@@ -23,14 +23,14 @@ import {MatPaginator, MatSort} from '@angular/material';
 export class PlayoffComponent  {
 
   displayedColumns = ['playerId', 'firstName', 'lastName', 'height','position','team'];
-  exampleDatabase = new ExampleDatabase();
+  exampleDatabase = new ExampleDatabase(this.nba);
   dataSource: ExampleDataSource | null;
 
   @ViewChild('filter') filter: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(private nba:NbaService) {
   }
 
   ngOnInit() {
@@ -84,21 +84,21 @@ const databased = {
 
 export interface NbaData{
   id:string,
-  firstName:string,
-  lastName:string,
-  height:string,
-  position:string,
-  team:string
+  // firstName:string,
+  // lastName:string,
+  // height:string,
+  // position:string,
+  // team:string
 }
 
 /** An example database that the data source uses to retrieve data for the table. */
-export class ExampleDatabase {
+export class ExampleDatabase{
   /** Stream that emits whenever the data has been modified. */
   dataChange: BehaviorSubject<NbaData[]> = new BehaviorSubject<NbaData[]>([]);
 
-  constructor() {
+  constructor(private nba:NbaService) {
     // Fill up the database with 100 users.
-    for (let i = 0; i < databased.rosterplayers.playerentry.length; i++) {
+    for (let i = 0; i < 6; i++) {
       this.addUser();
     }
   }
@@ -196,7 +196,7 @@ export class ExampleDataSource extends DataSource<NbaData> {
       return data;
     }
     return data.filter((item: NbaData) => {
-      const searchStr = (item.firstName + item.lastName).toLowerCase();
+      const searchStr = (item.id).toLowerCase();
       return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
     });
   }

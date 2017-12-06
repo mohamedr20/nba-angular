@@ -28,26 +28,18 @@ export class NbaService {
 
   //=========================
   getPlayoffTeamStandings(){
-    this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/playoff_team_standings.json?teamstats=W,L,PTS,PTSA',
+    return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/playoff_team_standings.json?teamstats=W,L,PTS,PTSA',
     {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
-    .subscribe(data=>{
-      console.log(data)
-    }) 
+
   }
   getDivisionStandings(){
-    this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/division_team_standings.json?teamstats=W,L,PTS,PTSA',
+    return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/division_team_standings.json?teamstats=W,L,PTS,PTSA',
     {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
-    .subscribe(data=>{
-      console.log(data)
-    }) 
   }
 
   getOverallTeamStandings(){
-    this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/overall_team_standings.json?teamstats=W,L,PTS,PTSA',
+    return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/overall_team_standings.json?teamstats=W,L,PTS,PTSA',
     {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
-    .subscribe(data=>{
-      console.log(data)
-    }) 
   }
   //==============
   
