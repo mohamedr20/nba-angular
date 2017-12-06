@@ -2,6 +2,26 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
+
+## App Routes
+
+App routes and their components
+
+    export const appRoutes: Routes = [
+      { path: '', component: UserProfileComponent},
+      {path:'nba',component:NbaComponent,children:[
+    {path:'standings',component:StandingsComponent,children:
+     [
+      {path:'division',component:DivisionComponent},
+      {path:'overall-rank',component:OverallRankComponent},
+      {path:'playoff',component:PlayoffComponent}
+    ]},
+      {path:'players',component:PlayersComponent},
+      {path:'stats',component:StatsComponent}
+
+    
+`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
