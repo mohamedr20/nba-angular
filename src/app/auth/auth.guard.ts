@@ -28,8 +28,9 @@ activated:boolean = false;
            .map(user => !!user)
            .do(loggedIn => {
              if (!loggedIn) {
+               alert('Please Log In.')
                localStorage.setItem('Authentication','false')
-               this.router.navigate(['/']);
+               this.router.navigate(['login']);
              }
          })
   }

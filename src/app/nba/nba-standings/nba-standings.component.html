@@ -1,5 +1,6 @@
 
 <nav mat-tab-nav-bar>
+    <h3>Pick a category</h3>
     <a mat-tab-link
         *ngFor="let routeLink of routeLinks"
         [routerLink]="routeLink.link"
@@ -9,8 +10,5 @@
         {{routeLink.label}}
     </a>
 </nav>
-
-
-
 
 <router-outlet></router-outlet>

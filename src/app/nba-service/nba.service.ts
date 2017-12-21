@@ -30,7 +30,6 @@ export class NbaService {
   getPlayoffTeamStandings(){
     return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/playoff_team_standings.json?teamstats=W,L,PTS,PTSA',
     {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
-
   }
   getDivisionStandings(){
     return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/division_team_standings.json?teamstats=W,L,PTS,PTSA',
@@ -44,19 +43,13 @@ export class NbaService {
   //==============
   
   getActivePlayers(){
-    this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/active_players.json',
+    return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/active_players.json',
     {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
-    .subscribe(data=>{
-      console.log(data)
-    }) 
   }
 
   getGameLineup(){
     this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/game_startinglineup.json?gameid=20171113-DEN-POR',
     {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
-    .subscribe(data=>{
-      console.log(data)
-    }) 
   }
 
   getRoster(){
@@ -64,5 +57,13 @@ export class NbaService {
     {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
   }
 
+  getCumulativePlayerStats(){
+    return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/cumulative_player_stats.json?playerstats=2PA,2PM,3PA,3PM,FTA,FTM',
+  {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
+  }
 
+  getDailyPlayerStats(){
+    return this.http.get('https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/cumulative_player_stats.json?playerstats=2PA,2PM,3PA,3PM,FTA,FTM',
+    {headers:new HttpHeaders().set('Authorization','Basic '+credentials)})
+  }
 }

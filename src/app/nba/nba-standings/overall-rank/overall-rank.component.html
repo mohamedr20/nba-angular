@@ -1,21 +1,21 @@
 <div class="example-container mat-elevation-z8">
     <div class="example-header">
       <mat-input-container floatPlaceholder="never">
-        <input matInput #filter placeholder="Filter users">
+        <input matInput #filter placeholder="Filter teams">
       </mat-input-container>
     </div>
   
     <mat-table #table [dataSource]="dataSource" matSort>
   
     <ng-container matColumnDef="rank">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rank </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.rank}} </mat-cell>
     </ng-container>
 
     <!-- Progress Column -->
-    <ng-container matColumnDef="GamesPlayed">
+    <ng-container matColumnDef="Games Played">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Games Played</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.GamesPlayed}}</mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.gamesPlayed}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->

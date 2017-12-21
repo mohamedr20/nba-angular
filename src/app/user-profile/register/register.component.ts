@@ -1,42 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../../auth/auth.service";
+import {Component,OnInit} from '@angular/core';
+import {AuthService} from '../../auth/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 import {Router} from '@angular/router';
-
 @Component({
-  selector: 'user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  selector: 'register',
+  styleUrls: ['./register.component.scss'],
+  templateUrl:'./register.component.html'
 })
-
-export class UserFormComponent implements OnInit {
+export class RegisterComponent implements OnInit{
   userForm: FormGroup;
-  newUser: boolean = true; // to toggle login or signup form
-  passReset: boolean = false;
+  errMessage:string = " "
   constructor(private fb: FormBuilder, private router:Router,private auth: AuthService) {}
    ngOnInit(): void {
      this.buildForm();
    }
-   toggleForm(): void {
-     this.newUser = !this.newUser;
+
+   signup(){
+     return this.auth.emailSignUp(this.userForm.value)
+     .then((user)=>{
+      this.router.navigate(['/nba'])
+      return this.auth.updateUserData(user)
+     })
+     .catch((err)=>this.errMessage = "User not found, please register.")
    }
-   signup(): void {
-     this.auth.emailSignUp(this.userForm.value)
-   }
-   login(): void {
-     this.auth.emailLogin(this.userForm.value)
-        .then((user)=>{
-        this.router.navigate(['/nba'])
-        localStorage.setItem('Authentication','true')
-        return this.auth.updateUserData(user)
-    })
-    .catch((err)=>{
-      if(err.code = 'auth/user-not-found'){
-        let errMessage = err.message;
-        this.validationMessages.email.user = err.message
-      }
-    })
-   }
+
 //    resetPassword() {
 //      this.auth.resetPassword(this.userForm.value['email'])
 //      .then(() => this.passReset = true)
@@ -92,4 +80,5 @@ export class UserFormComponent implements OnInit {
        'maxlength':     'Password cannot be more than 40 characters long.',
      }
    };
+
 }

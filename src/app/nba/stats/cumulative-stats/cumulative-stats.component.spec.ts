@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayersComponent } from './players.component';
+import { CumulativeStatsComponent } from './cumulative-stats.component';
 
-describe('PlayersComponent', () => {
-  let component: PlayersComponent;
-  let fixture: ComponentFixture<PlayersComponent>;
+describe('CumulativeStatsComponent', () => {
+  let component: CumulativeStatsComponent;
+  let fixture: ComponentFixture<CumulativeStatsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayersComponent ]
+      declarations: [ CumulativeStatsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayersComponent);
+    fixture = TestBed.createComponent(CumulativeStatsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -23,10 +23,10 @@ import {NbaService} from '../../../nba-service/nba.service';
   styleUrls: ['./overall-rank.component.scss'],
 })
 export class OverallRankComponent implements OnInit{
-  displayedColumns = ['rank', 'GamesPlayed', 'Wins', 'Losses','Points','PointsAgainst','Name'];
+  displayedColumns = ['rank', 'Games Played', 'Wins', 'Losses','Points','PointsAgainst','Name'];
   exampleDatabase = new ExampleDatabase(this.nba);
   dataSource: ExampleDataSource | null;
-
+  date:string;
   @ViewChild('filter') filter: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -35,7 +35,7 @@ export class OverallRankComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
+    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator,this.sort);
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
         .debounceTime(150)
         .distinctUntilChanged()
@@ -52,83 +52,52 @@ export class OverallRankComponent implements OnInit{
 /** Constants used to fill up our data base. */
 
 
-export interface NbaData{
+export interface OverallRankData{
   rank:string,
   gamesPlayed:string,
   wins:string,
   losses:string,
-  pts:string,
-  ptsAgainst:string,
+  pts:number,
+  ptsAgainst:number,
   teamName:string
 }
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleDatabase {
   /** Stream that emits whenever the data has been modified. */
-  dataChange: BehaviorSubject<NbaData[]> = new BehaviorSubject<NbaData[]>([]);
+  dataChange: BehaviorSubject<OverallRankData[]> = new BehaviorSubject<OverallRankData[]>([]);
   data_length:any;
-  dataApi:any;
   constructor(private nba:NbaService) {
-    // Fill up the database with 100 users.
-
-      // this.addUser(i);
       this.fetchTeamsData()
-
   }
 
   get data(): any {
     return this.dataChange.value;
   }
 
-  /** Adds a new user to the database. */
-  //  addUser(i) {
-  //   const copiedData = this.data.slice();
-  //   copiedData.push(this.createNewUser(i));
-  //   this.dataChange.next(copiedData);
-  // }
-
   fetchTeamsData(){
     return this.nba.getOverallTeamStandings()
                .subscribe( data => {
-                 console.log(data);
                  let teamsData = data['overallteamstandings']['teamstandingsentry']
-                 
+                 console.log(teamsData);
                  const copiedData = this.data.slice();
-                 teamsData.foreach( team => {
+                 teamsData.forEach( team => {
                    copiedData.push( this.createNewUser( team ) )
                  } )
-                 // after teams are built, next it
                  this.dataChange.next( copiedData )
                } )
   }
-  // createNewUser( team ){
-  //   return {
-  //     rank:team.rank,
-  //     gamesPlayed:team.stats.GamesPlayed["#text"],
-  //     wins:team.stats.Wins["#text"],
-  //     losses:team.stats.Losses["#text"],
-  //     pts:team.stats.Pts["#text"],
-  //     ptsAgainst:team.stats.PtsAgainst["#text"],
-  //     teamName:team.team.Name
-  //     } 
-  // }
-  /** Builds and returns a new User. */
-  createNewUser(i){
-    this.nba.getOverallTeamStandings()
-    .subscribe((data)=>{
-      var obj = {
-        rank:data["overallteamstandings"]["teamstandingsentry"][i]["rank"],
-        gamesPlayed:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["GamesPlayed"]["#text"],
-        wins:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["Wins"]["#text"],
-        losses:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["Losses"]["#text"],
-        pts:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["Pts"]["#text"],
-        ptsAgainst:data["overallteamstandings"]["teamstandingsentry"][i]["stats"]["PtsAgainst"]["#text"],
-        teamName:data["overallteamstandings"]["teamstandingsentry"][i]["team"]["Name"]
-        }
-      return obj;
-    })
+  createNewUser( team ){
+    return {
+      rank:team.rank,
+      gamesPlayed:team.stats.GamesPlayed["#text"],
+      wins:team.stats.Wins["#text"],
+      losses:team.stats.Losses["#text"],
+      pts:Math.round(team.stats.Pts["#text"]/team.stats.GamesPlayed["#text"]),
+      ptsAgainst:Math.round(team.stats.PtsAgainst["#text"]/team.stats.GamesPlayed["#text"]),
+      teamName:team.team.Name
+      } 
   }
-
 }
 /**
  * Data source to provide what data should be rendered in the table. Note that the data source
@@ -137,7 +106,7 @@ export class ExampleDatabase {
  * the underlying data. Instead, it only needs to take the data and send the table exactly what
  * should be rendered.
  */
-export class ExampleDataSource extends DataSource<NbaData> {
+export class ExampleDataSource extends DataSource<OverallRankData> {
 
   /** Emits once if dataSource is disconnected  */
   disconnect$ = new Subject();
@@ -146,7 +115,7 @@ export class ExampleDataSource extends DataSource<NbaData> {
   /** emits the filter value */
   _filterChange = new BehaviorSubject<string>('');
 
-  constructor(private _exampleDatabase: ExampleDatabase,private _sort: MatSort) {
+  constructor(private _exampleDatabase: ExampleDatabase, private _paginator: MatPaginator, private _sort: MatSort) {
     super();
   }
 
@@ -158,20 +127,20 @@ export class ExampleDataSource extends DataSource<NbaData> {
     this._filterChange.next(filter);
   }
 
-  connect(): Observable<NbaData[]> {
+  connect(): Observable<OverallRankData[]> {
 
     /** Holder for everything that affects displayed rows.  */
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
-      // this._paginator.page,
+      this._paginator.page,
       this._filterChange,
       this._sort.sortChange,
     ];
 
     /** Reset the Pagination to startpage if filtering is in progress.  */
-    // this._filterChange
-    //     .takeUntil(this.disconnect$)
-    //     .subscribe(() => this.resetPaginator());
+    this._filterChange
+        .takeUntil(this.disconnect$)
+        .subscribe(() => this.resetPaginator());
 
     /** Provides the actual data.  */
     return Observable
@@ -181,13 +150,13 @@ export class ExampleDataSource extends DataSource<NbaData> {
         .map((data) => this.getFilteredData(data))
         .map(data => this.getSortedData(data))
         .do(data => this.setLength(data))
-        // .map(data => this.paginate(data));
+        .map(data => this.paginate(data));
   }
 
 
-  // resetPaginator() {
-  //   return this._paginator.pageIndex = 0;
-  // }
+  resetPaginator() {
+    return this._paginator.pageIndex = 0;
+  }
 
   getFreshData() {
     return this._exampleDatabase.data.slice();
@@ -197,22 +166,21 @@ export class ExampleDataSource extends DataSource<NbaData> {
     if (this.filter === '') {
       return data;
     }
-    return data.filter((item: NbaData) => {
-      const searchStr = (item.rank).toLowerCase();
+    return data.filter((item: OverallRankData) => {
+      const searchStr = (item.teamName).toLowerCase();
       return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
     });
   }
 
-  // paginate(data) {
-  //   const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-  //   return data.splice(startIndex, this._paginator.pageSize);
-  // }
+  paginate(data) {
+    const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+    return data.splice(startIndex, this._paginator.pageSize);
+  }
 
   setLength(data) {
     return this.length = data.length;
   }
-
-  getSortedData(data): NbaData[] {
+  getSortedData(data): OverallRankData[] {
     if (!this._sort.active || this._sort.direction === '') {
       return data;
     }
@@ -221,7 +189,12 @@ export class ExampleDataSource extends DataSource<NbaData> {
       let propertyB: number | string = '';
 
       switch (this._sort.active) {
-        case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
+        case 'rank': [propertyA, propertyB] = [a.rank, b.rank]; break;
+        case'gamesPlayed': [propertyA,propertyB] = [a.gamesPlayed,b.gamesPlayed];break;
+        case'wins': [propertyA,propertyB] = [a.wins,b.wins];break;
+        case'losses': [propertyA,propertyB] = [a.losses,b.losses];break;
+        case'pts': [propertyA,propertyB] = [a.pts,b.pts];break;
+        case'ptsAgainst': [propertyA,propertyB] = [a.ptsAgainst,b.ptsAgainst];break;
       }
 
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

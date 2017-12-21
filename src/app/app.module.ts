@@ -13,42 +13,39 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import {SharedModule} from './shared/shared.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { UserFormComponent } from './user-profile/user-form/user-form.component';
 import {NbaComponent} from './nba/nba.component';
-
 import {firebaseConfig} from '../../firebase.config';
 import {StandingModule} from './nba/nba-standings/standing.module';
-import {PlayerModule} from './nba/players/player.module';
 import {StatsModule} from './nba/stats/stats.module';
 import { ErrorComponent } from './error/error.component';
 import {DialogData} from './error/error.component';
-
-
 import {StandingsComponent} from './nba/nba-standings/nba-standings.component';
 import { OverallRankComponent } from './nba/nba-standings/overall-rank/overall-rank.component';
 import { DivisionComponent } from './nba/nba-standings/division/division.component';
 import { PlayoffComponent } from './nba/nba-standings/playoff/playoff.component';
-
-
+import {StatsComponent} from './nba/stats/stats.component';
+import {CumulativeStatsComponent} from './nba/stats/cumulative-stats/cumulative-stats.component';
+import { LoginComponent } from './user-profile/login/login.component';
+import { RegisterComponent } from './user-profile/register/register.component';
 
 export const appRoutes: Routes = [
-  { path: '', component: UserProfileComponent},
-  {path:'nba',component:NbaComponent,children:[
+  { path: '',pathMatch:'full',redirectTo:'login'},
+  {path:'login',component:LoginComponent},
+  {path:'register',component:RegisterComponent},
+  {path:'nba',component:NbaComponent,canActivate:[AuthGuard],children:[
     {path:'standings',component:StandingsComponent,children:[
       {path:'division',component:DivisionComponent},
       {path:'overall-rank',component:OverallRankComponent},
       {path:'playoff',component:PlayoffComponent}
     ]},
       // {path:'standings',children:StandingRoutes,component:StandingsComponent},
-      // {path:'players',component:PlayersComponent},
-      // {path:'stats',component:StatsComponent}
+      {path:'stats',component:StatsComponent,children:[
+        {path:'cumulative',component:CumulativeStatsComponent},
+      ]}
     ]
   },
 ]
 
-
-  // {path:'../stats',component:NbaStatsComponent},
-  // {path:'../players',component:NbaPlayersComponent},
   
 
 
@@ -58,9 +55,10 @@ export const appRoutes: Routes = [
     DialogData,
     AppComponent,
     UserProfileComponent,
-    UserFormComponent,
     NbaComponent,
     ErrorComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,15 +70,10 @@ export const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
-    PlayerModule,
     StatsModule,
     StandingModule,
     NbaModule,
     RouterModule.forRoot(appRoutes)
-    // StandingRoutingModule,
-    // PlayerRoutingModule,
-    // StatRoutingModule,
-    // AppRoutingModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

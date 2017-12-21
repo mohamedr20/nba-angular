@@ -1,13 +1,13 @@
 
 
 				<mat-toolbar class="mat-toolbar mat-elevation-z6" color="primary">
-					<i (click)="sidenav.open()"class="material-icons md-48">menu</i>
-					<li>Menu</li>
+					
 				<div *ngIf="auth.user | async; then authenticated">
 					
 				</div>
 				<ng-template #authenticated>
-						<i class="flex-end material-icons">exit_to_app</i>
+						<li>Log Out</li>
+						<i (click)="signout()" class="flex-end material-icons">exit_to_app</i>
 				</ng-template>
 				</mat-toolbar>
 

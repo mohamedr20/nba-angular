@@ -1,135 +1,66 @@
-<!-- <div class="example-container mat-elevation-z8">
-        <div class="example-header">
-          <mat-input-container floatPlaceholder="never">
-            <input matInput #filter placeholder="Filter users">
-          </mat-input-container>
-        </div>
-      
-        <mat-table #table [dataSource]="dataSource" matSort>
-      
-          <ng-container matColumnDef="Division Name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Division </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.divisionName}} </mat-cell>
-        </ng-container>
-    
-        <!-- Progress Column -->
-        <!-- <ng-container matColumnDef="Division Rank">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Rank </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.divisionRank}}</mat-cell>
-        </ng-container> -->
-    
-        <!-- Name Column -->
-        <!-- <ng-container matColumnDef="Team Name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Team Name </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.TeamName}} </mat-cell>
-        </ng-container>
-     -->
-        <!-- Color Column -->
-        <!-- <ng-container matColumnDef="Games Played">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Games </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.GamesPlayed}} </mat-cell>
-        </ng-container>
-    
-        <ng-container matColumnDef="Wins">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Wins</mat-header-cell>
-            <mat-cell *matCellDef="let row" > {{row.Wins}} </mat-cell>
-          </ng-container>
-     -->
-    
-        <!-- <ng-container matColumnDef="Losses">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Losses</mat-header-cell>
-            <mat-cell *matCellDef="let row" > {{row.Losses}} </mat-cell>
-          </ng-container>
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-input-container floatPlaceholder="never">
+      <input matInput #filter placeholder="Filter teams">
+    </mat-input-container>
+  </div>
 
-          <ng-container matColumnDef="PPG">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>PPG</mat-header-cell>
-                <mat-cell *matCellDef="let row" > {{row.Points}} </mat-cell>
-              </ng-container>
-        
-              <ng-container matColumnDef="PPG Against">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> PPG Against</mat-header-cell>
-                    <mat-cell *matCellDef="let row" > {{row.PointsAgainst}} </mat-cell>
-                  </ng-container>
-            
+  <mat-table #table [dataSource]="dataSource" matSort>
 
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table> -->
-    
-<!-- 
-        <mat-paginator #paginator
-                      [length]="dataSource.length"
-                      [pageIndex]="0"
-                      [pageSize]="10"
-                      [pageSizeOptions]="[5, 10, 25, 100]">
-        </mat-paginator>  -->
-<!--       
-      </div> -->
+    <ng-container matColumnDef="Division">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Conference</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.division}} </mat-cell>
+    </ng-container>
+
+  <ng-container matColumnDef="Rank">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Rank </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.rank}} </mat-cell>
+  </ng-container>
+
+  <!-- Progress Column -->
+  <ng-container matColumnDef="Games Played">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Games Played</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.gamesPlayed}}</mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Wins">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Wins</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.wins}} </mat-cell>
+  </ng-container>
+
+  <!-- Color Column -->
+  <ng-container matColumnDef="Losses">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Losses </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.losses}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="PPG">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Points</mat-header-cell>
+      <mat-cell *matCellDef="let row" > {{row.pts}} </mat-cell>
+    </ng-container>
+
+
+  <ng-container matColumnDef="PPG Against">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> PPG Against</mat-header-cell>
+      <mat-cell *matCellDef="let row" > {{row.ptsAgainst}} </mat-cell>
+    </ng-container>
   
-      <div class="example-container mat-elevation-z8">
-        <div class="example-loading-shade"
-             *ngIf="isLoadingResults || isRateLimitReached">
-          <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-          <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-            GitHub's API rate limit has been reached. It will be reset in one minute.
-          </div>
-        </div>
-      
-        <mat-table #table [dataSource]="dataSource" class="example-table"
-                   matSort>
-      
-          <!--- Note that these columns can be defined in any order.
-                The actual rendered columns are set as a property on the row definition" -->
-      
-                <ng-container matColumnDef="Division Name">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Division </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.divisionName}} </mat-cell>
-                </ng-container>
-            
+    <ng-container matColumnDef="Name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Team Name</mat-header-cell>
+      <mat-cell *matCellDef="let row" > {{row.teamName}} </mat-cell>
+    </ng-container>
 
-                <ng-container matColumnDef="Division Rank">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Rank </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.divisionRank}}</mat-cell>
-                </ng-container>
-            
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 
-                <ng-container matColumnDef="Team Name">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Team Name </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.TeamName}} </mat-cell>
-                </ng-container>
-            
-                <!-- Color Column -->
-                <ng-container matColumnDef="Games Played">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Games </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.GamesPlayed}} </mat-cell>
-                </ng-container>
-            
-                <ng-container matColumnDef="Wins">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Wins</mat-header-cell>
-                    <mat-cell *matCellDef="let row" > {{row.Wins}} </mat-cell>
-                  </ng-container>
-            
-                <ng-container matColumnDef="Losses">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Losses</mat-header-cell>
-                    <mat-cell *matCellDef="let row" > {{row.Losses}} </mat-cell>
-                  </ng-container>
-        
-                  <ng-container matColumnDef="PPG">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>PPG</mat-header-cell>
-                        <mat-cell *matCellDef="let row" > {{row.Points}} </mat-cell>
-                      </ng-container>
-    
-                  <ng-container matColumnDef="PPG Against">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header> PPG Against</mat-header-cell>
-                          <mat-cell *matCellDef="let row" > {{row.PointsAgainst}} </mat-cell>
-                  </ng-container>
 
-      
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      
-        <mat-paginator [length]="resultsLength" [pageSize]="30">
-        </mat-paginator>
-      </div>
-      
+  <mat-paginator #paginator
+                [length]="dataSource.length"
+                [pageIndex]="0"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+
+</div>

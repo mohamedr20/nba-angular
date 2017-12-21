@@ -5,7 +5,6 @@ import { OverallRankComponent } from './overall-rank/overall-rank.component';
 import { DivisionComponent } from './division/division.component';
 import { PlayoffComponent } from './playoff/playoff.component';
 import {StandingsComponent} from './nba-standings.component';
-
 import {StandingRoutingModule} from './standing-routes.module'
 
 @NgModule({

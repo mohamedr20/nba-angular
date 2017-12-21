@@ -6,17 +6,15 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap'
 
-interface EmailPasswordCredentials{
-  email:string;
-  password:string;
+interface Credentials{
+  email:string,
+  password:string
 }
-
 interface User {
   uid: string;
   email: string;
-  photoURL?: string;
-  displayName?: string;
-  favoriteColor?: string;
+  photoURL: string;
+  catchPhrase?: string;
 }
 @Injectable()
 export class AuthService {
@@ -52,29 +50,24 @@ export class AuthService {
     const data: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName,
       photoURL: user.photoURL
     }
     return userRef.set(data)
   }
 
-  emailSignUp(credentials:EmailPasswordCredentials){
-    return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email,credentials.password)
-      .then((user)=>{
-        this.router.navigate(['/nba'])
-        localStorage.setItem('Authentication','true')
-        return this.updateUserData(user)
-      })
+  emailSignUp(Credentials){
+    return this.afAuth.auth.createUserWithEmailAndPassword(Credentials.email,Credentials.password)
     }
   
-  emailLogin(credentials:EmailPasswordCredentials){
-    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,credentials.password)
+  emailLogin(Credentials){
+    return this.afAuth.auth.signInWithEmailAndPassword(Credentials.email,Credentials.password)
   }
+  
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
         localStorage.setItem('Authentication','false')
-        this.router.navigate(['/']);
+        this.router.navigate(['login']);
     });
   }
 }
